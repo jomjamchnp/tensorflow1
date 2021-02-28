@@ -35,9 +35,9 @@ from object_detection.protos import eval_pb2
 
 # Name of the directory containing the object detection module we're using
 MODEL_NAME = 'inference_graph'
-IMAGE_NAME = 'onlyhand'
-file = '.jpg'
+IMAGE_NAME = '2typehands.jpg'
 DETECT_FOLDER = 'detectcircle'
+IMAGE_FOLDER = 'image_test'
 
 
 # Grab path to current working directory
@@ -51,7 +51,7 @@ PATH_TO_CKPT = os.path.join(CWD_PATH,MODEL_NAME,'frozen_inference_graph.pb')
 PATH_TO_LABELS = os.path.join(CWD_PATH,'training','labelmap.pbtxt')
 
 # Path to image
-PATH_TO_IMAGE = os.path.join(CWD_PATH,IMAGE_NAME+file)
+PATH_TO_IMAGE = os.path.join(CWD_PATH,IMAGE_FOLDER,IMAGE_NAME)
 
 # Number of classes the object detector can identify
 NUM_CLASSES = 2
@@ -132,19 +132,19 @@ for coordinate in coordinates:
             #ymin,ymax,xmin,xmax
            (y1, y2, x1, x2, accuracy, classification) = coordinate
 
-with open(os.path.join(CWD_PATH,DETECT_FOLDER,"json/"+"script"+IMAGE_NAME+".json"), "w",encoding='utf-8') as f:
+with open(os.path.join(CWD_PATH,DETECT_FOLDER,"json/"+"script"+IMAGE_NAME.split(".")[0]+".json"), "w",encoding='utf-8') as f:
   json.dump(coordinates, f,ensure_ascii=False, indent=4)
   f.write('\n')
 
 
 
 # All the results have been drawn on image. Now display the image.
-width = 690
-height = 481 # keep original height
-dim = (width, height)
+# width = 690
+# height = 481 # keep original height
+# dim = (width, height)
  
 # resize image
-resized = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
+# resized = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
 
 output = image.copy()
 cv2.imshow('Object detector', output)
